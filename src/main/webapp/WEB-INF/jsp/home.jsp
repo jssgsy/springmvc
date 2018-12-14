@@ -15,5 +15,7 @@
 http://localhost:8080/home/home<p></p>
 http://localhost:8080/home/second?name=univ
 
+注意观察控制台的输出。
+
 </body>
 </html>

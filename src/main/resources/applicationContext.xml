@@ -13,6 +13,7 @@
     <!--经验证，下面两句必须放在此文件而不能放在springmvc-servlet.xml文件中!-->
     <!--自动将@Component,@Controller等注册为bean-->
     <context:component-scan base-package="com.univ.controller"/>
+    <context:component-scan base-package="com.univ.exception"/>
 
     <!--支持@RequestMapping的请求方式-->
     <mvc:annotation-driven/>
