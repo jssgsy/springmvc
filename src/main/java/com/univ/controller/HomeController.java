@@ -20,21 +20,12 @@ import com.univ.domain.Demo;
 public class HomeController {
 
     /**
-     * 此Controller中抛出的所有RuntimeException异常都会被这里捕获
+     * 此Controller中抛出的所有 UnsupportedOperationException异常及其子异常 都会被这里捕获
+     * 和异常处理原则一样，尽量抛具体的异常类型，不要抛顶层的异常
+     *
      * 可在这里对此controller进行统一的异常处理；
      * 注意，此时@ExceptionHandler放在Controller中的粒度是某个控制器级别，可结合@ControllerAdvice对整个项目进行统一的异常处理
      * 如果项目级别也定义也此异常的处理，则以这里的为优先
-     * @param exception
-     * @return
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public String catchRuntimeException(RuntimeException exception) {
-        System.out.println(exception.getMessage());
-        return "home";
-    }
-
-    /**
-     * 此Controller中抛出的所有UnsupportedOperationException异常都会被这里捕获
      * @param exception
      * @return
      */
