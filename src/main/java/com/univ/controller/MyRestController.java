@@ -3,6 +3,7 @@ package com.univ.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,5 +45,22 @@ public class MyRestController {
         d4.setAge(40);
         d4.setName("ddd");
         return Arrays.asList(d1, d2, d3, d4);
+    }
+
+    /**
+     * @RequestBody:将前端以json字符串传来的数据转成对应的对象
+     * @param demo
+     * @return
+     */
+    @RequestMapping("/demo")
+    public Demo saveDemo(@RequestBody Demo demo) {
+        System.out.println(demo); // Demo{name='univ', age=20}
+
+        return demo;
+        // 返回数据
+        /*"{\n"
+                + "    \"name\": \"univ\",\n"
+                + "    \"age\": 20\n"
+                + "}"*/
     }
 }
