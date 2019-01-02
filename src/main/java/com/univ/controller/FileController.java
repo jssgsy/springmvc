@@ -1,7 +1,7 @@
 package com.univ.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +48,22 @@ public class FileController {
         System.out.println(fileDemo.getAge());
         System.out.println(fileDemo.getFile().getName());
         System.out.println(fileDemo.getFile().getContentType());
+        return "ok";
+    }
+
+    /**
+     * 上传文件的同时附加其它很多参数
+     * @param file
+     * @param request
+     * @return
+     */
+    @RequestMapping("/upload3")
+    public String upload3(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        System.out.println(file.getName());
+        System.out.println(file.getName());
+        System.out.println(file.getContentType());
+        System.out.println(request.getParameter("name"));
+        
         return "ok";
     }
 
