@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -100,4 +101,16 @@ public class HomeController {
         return "接收到的id值为：" + id;
     }
 
+    /**
+     * 使用@RequestHeader获取请求头的信息
+     * 类似的注解还有：@CookieValue：获取cookie的值，
+     * @param host
+     * @return
+     */
+    @RequestMapping("/requestheader")
+    @ResponseBody
+    public String fn(@RequestHeader("Host") String host) {
+        System.out.println("host is :" + host);
+        return "host is :" + host;
+    }
 }
