@@ -49,6 +49,14 @@
             <version>3.1.0</version>
         </dependency>
 
+        <!--在springmvc中使用@Validated也需要引入
+            引入6.0.10.Final竟然不行！！！
+        -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.1.Final</version>
+        </dependency>
 
     </dependencies>
 
