@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class RemoteDomain {
+public class RemoteSource {
 
     private Long id;
 

@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSONObject;
-import com.univ.common.response.BaseResult;
-import com.univ.domain.RemoteDomain;
+import com.univ.common.response.ListResult;
+import com.univ.common.response.PlainResult;
+import com.univ.domain.RemoteDest;
+import com.univ.domain.RemoteSource;
 
 /**
  * @author univ
@@ -65,9 +67,9 @@ public class RestTemplateController {
     }
 
     @RequestMapping("/remoteObj")
-    public BaseResult.PlainResult<RemoteDomain> remoteObj() {
-        RemoteDomain r1 = new RemoteDomain().setEmail("aaa@163.com").setId(100l).setRealname("zhangsan");
-        BaseResult.PlainResult<RemoteDomain> result = new BaseResult.PlainResult<>();
+    public PlainResult<RemoteSource> remoteObj() {
+        RemoteSource r1 = new RemoteSource().setEmail("aaa@163.com").setId(100l).setRealname("zhangsan");
+        PlainResult<RemoteSource> result = new PlainResult<>();
         result.setData(r1);
         return result;
     }
@@ -78,25 +80,25 @@ public class RestTemplateController {
      * @return
      */
     @RequestMapping("/obj")
-    public BaseResult.PlainResult<RemoteDomain> obj() {
+    public PlainResult<RemoteDest> obj() {
         HttpHeaders h = new HttpHeaders();
         HttpEntity httpEntity = new HttpEntity(h);
 
-        // 利用ParameterizedTypeReference，将返回的结果映射成PlainResult<RemoteDomain>类型
-        ParameterizedTypeReference<BaseResult.PlainResult<RemoteDomain>> typeRef = new ParameterizedTypeReference<BaseResult.PlainResult<RemoteDomain>>() {};
-        BaseResult.PlainResult<RemoteDomain> result = restTemplate.exchange("http://127.0.0.1:8080/rest/remoteObj", HttpMethod.GET, httpEntity, typeRef).getBody();
+        // 利用ParameterizedTypeReference，将返回的结果映射成PlainResult<RemoteSource>类型
+        ParameterizedTypeReference<PlainResult<RemoteDest>> typeRef = new ParameterizedTypeReference<PlainResult<RemoteDest>>() {};
+        PlainResult<RemoteDest> result = restTemplate.exchange("http://127.0.0.1:8080/rest/remoteObj", HttpMethod.GET, httpEntity, typeRef).getBody();
         System.out.println(result);
         return result;
     }
 
 
     @RequestMapping("/remoteArr")
-    public BaseResult.ListResult<RemoteDomain> remoteArr() {
-        RemoteDomain r1 = new RemoteDomain().setEmail("aaa@163.com").setId(100l).setRealname("zhangsan");
-        RemoteDomain r2 = new RemoteDomain().setEmail("bbb@163.com").setId(200l).setRealname("lisi");
-        RemoteDomain r3 = new RemoteDomain().setEmail("ccc@163.com").setId(300l).setRealname("wangwu");
+    public ListResult<RemoteSource> remoteArr() {
+        RemoteSource r1 = new RemoteSource().setEmail("aaa@163.com").setId(100l).setRealname("zhangsan");
+        RemoteSource r2 = new RemoteSource().setEmail("bbb@163.com").setId(200l).setRealname("lisi");
+        RemoteSource r3 = new RemoteSource().setEmail("ccc@163.com").setId(300l).setRealname("wangwu");
 
-        BaseResult.ListResult<RemoteDomain> result = new BaseResult.ListResult<>();
+        ListResult<RemoteSource> result = new ListResult<>();
         result.setData(Arrays.asList(r1, r2, r3));
 
         return result;
@@ -108,13 +110,13 @@ public class RestTemplateController {
      * @return
      */
     @RequestMapping("/arr")
-    public BaseResult.ListResult<RemoteDomain> arr() {
+    public ListResult<RemoteSource> arr() {
         HttpHeaders h = new HttpHeaders();
         HttpEntity httpEntity = new HttpEntity(h);
 
-        // 利用ParameterizedTypeReference，将返回的结果映射成ListResult<RemoteDomain>类型
-        ParameterizedTypeReference<BaseResult.ListResult<RemoteDomain>> typeRef = new ParameterizedTypeReference<BaseResult.ListResult<RemoteDomain>>() {};
-        BaseResult.ListResult<RemoteDomain> result = restTemplate.exchange("http://127.0.0.1:8080/rest/remoteArr", HttpMethod.GET, httpEntity, typeRef).getBody();
+        // 利用ParameterizedTypeReference，将返回的结果映射成ListResult<RemoteSource>类型
+        ParameterizedTypeReference<ListResult<RemoteSource>> typeRef = new ParameterizedTypeReference<ListResult<RemoteSource>>() {};
+        ListResult<RemoteSource> result = restTemplate.exchange("http://127.0.0.1:8080/rest/remoteArr", HttpMethod.GET, httpEntity, typeRef).getBody();
         System.out.println(result);
         return result;
     }
