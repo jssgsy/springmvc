@@ -1,6 +1,9 @@
 package com.univ.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +68,23 @@ public class FileController {
         System.out.println(request.getParameter("name"));
         
         return "ok";
+    }
+
+    /**
+     * 最基本的文件下载
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/download")
+    public void download(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String filename = "数据.txt";
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename="
+                + URLEncoder.encode(filename,"utf8"));
+        // 往文件中写入数据
+        response.getOutputStream().write("你好".getBytes());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
 
 }
