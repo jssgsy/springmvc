@@ -1,21 +1,34 @@
 package com.univ.domain;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
 
 /**
  * @author univ
  * @date 2019/1/8 10:07 AM
  * @description 演示spring mvc中@Validated的使用
  */
-public class ValidatedDemo {
+@Data
+public class ValidationDemo {
 
     @NotBlank
     private String name;
 
     @Min(20)
     private Integer age;
+
+    /**
+     * 1. 如果要嵌套验证ValidateInnerDemo中的规则，则这里必须使用@Valid注解
+     * 2. 注意，这里的嵌套验证只有在validateInnerDemo不为null时才会进行，如果要验证此字段不为null则需要加上@NotNull
+     */
+    @Valid  // 要嵌套验证则必须有此@Valid注解(不能使用@Validated)
+    @NotNull
+    private ValidateInnerDemo validateInnerDemo;
 
     public String getName() {
         return name;

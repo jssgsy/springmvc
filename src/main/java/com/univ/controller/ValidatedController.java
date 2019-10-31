@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.univ.domain.ValidatedDemo;
+import com.univ.domain.ValidationDemo;
 
 /**
  * @author univ
@@ -25,8 +25,8 @@ public class ValidatedController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/validated", method = RequestMethod.POST)
-    public ValidatedDemo validated(@Validated @RequestBody ValidatedDemo validatedDemo, BindingResult result) {
+    @RequestMapping(value = "/v1", method = RequestMethod.POST)
+    public ValidationDemo v1(@Validated @RequestBody ValidationDemo validatedDemo, BindingResult result) {
         System.out.println(result);
         // 如果校验发生了错误，则做下面的处理
         if (result.hasErrors()) {
@@ -43,4 +43,17 @@ public class ValidatedController {
     public String validateParameter(@Valid Long id, BindingResult result) {
         return "failed";
     }*/
+
+    /**
+     * 不使用BindingResult，则校验失败时会抛出MethodArgumentNotValidException异常，可使用全局异常捕获之
+     * @param validatedDemo
+     * @return
+     */
+    @RequestMapping(value = "/v2", method = RequestMethod.POST)
+    public ValidationDemo v2(@Validated @RequestBody ValidationDemo validatedDemo) {
+        return validatedDemo;
+    }
+
+
+
 }

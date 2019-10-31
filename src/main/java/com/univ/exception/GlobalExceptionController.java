@@ -1,6 +1,7 @@
 package com.univ.exception;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,6 +57,12 @@ public class GlobalExceptionController {
     @ExceptionHandler(value = {Exception.class})
     public String catchException(Exception exception) {
         System.out.println("catchException捕获异常： " + exception.getMessage());
+        return "home";
+    }
+
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public String catchMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        System.out.println("参数校验失败异常： " + exception.getBindingResult().getFieldError().getDefaultMessage());
         return "home";
     }
 }
