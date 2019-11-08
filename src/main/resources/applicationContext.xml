@@ -22,4 +22,7 @@
     <!--开启对@Async and @Scheduled的支持-->
     <task:annotation-driven/>
 
+    <!--使用bean validation校验path variable或者request param时需要-->
+    <bean id="methodValidationPostProcessor" class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
 </beans>

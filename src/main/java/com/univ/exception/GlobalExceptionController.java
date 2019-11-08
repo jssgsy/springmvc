@@ -1,5 +1,9 @@
 package com.univ.exception;
 
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -44,7 +48,7 @@ public class GlobalExceptionController {
     public Demo catchRuntimeException(RuntimeException exception) {
         Demo d = new Demo();
         d.setAge(20);
-        d.setName("捕获到的异常是：" + exception.getMessage());
+        d.setName("catchRuntimeException捕获异常：" + exception.getMessage());
         return d;
     }
 
@@ -60,9 +64,34 @@ public class GlobalExceptionController {
         return "home";
     }
 
+    /**
+     * 使用bean validation校验controller的入参(类型为Object)失败时
+     * @param exception
+     * @return
+     */
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public String catchMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        System.out.println("参数校验失败异常： " + exception.getBindingResult().getFieldError().getDefaultMessage());
+        System.out.println("catchMethodArgumentNotValidException捕获异常： " + exception.getBindingResult().getFieldError().getDefaultMessage());
+        return "home";
+    }
+
+    /**
+     * 使用bean validation校验controller入参(path variable或者request param)失败时
+     * 注意：必须要声明spring的MethodValidationPostProcessor对象
+     * @param violationException
+     * @return
+     */
+    @ExceptionHandler(value = {ConstraintViolationException.class})
+    public String catchConstraintViolationException(ConstraintViolationException violationException) {
+        // 注意，校验失败的异常信息不是violationException.getMessage()
+        // System.out.println("ConstraintViolationException捕获异常： " + violationException.getMessage());
+        
+        System.out.println("catchConstraintViolationException捕获异常如下：");
+        // 校验失败的异常信息需要通过getConstraintViolations()获取
+        Set<ConstraintViolation<?>> constraintViolations = violationException.getConstraintViolations();
+        for (ConstraintViolation violation :constraintViolations) {
+            System.out.println(violation.getMessage());
+        }
         return "home";
     }
 }
