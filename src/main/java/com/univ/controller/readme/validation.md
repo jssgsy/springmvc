@@ -16,3 +16,8 @@
     d. 注意，此时校验失败时会抛出`ConstraintViolationException`而不是MethodArgumentNotValidException异常，且不能使用BindResult；
 3. 如果要嵌套验证，则需要在被嵌套的字段上使用@Valid，否则没法嵌套验证；
 
+# 对service或其它层校验
+对生命周期由spring管理的service层与其它层的对象，均可进行bean validation校验，方法和校验controller层的pathVariable与request param参数一样（`其实本质都是对方法进行校验``），
+1. 将@Validated放在类级别上(如ValidationService.java)；
+2. 对入参，返回值使用约束注解；
+3. 声明spring的`MethodValidationPostProcessor`对象；

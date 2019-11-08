@@ -1,5 +1,6 @@
 package com.univ.controller;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.domain.ValidationDemo;
+import com.univ.service.ValidationService;
 
 /**
  * @author univ
@@ -22,7 +24,7 @@ import com.univ.domain.ValidationDemo;
 @RestController
 @RequestMapping("/validate")
 @Validated  // 只在校验path variable时与request param时需要。
-public class ValidatedController {
+public class ValidationController {
 
     /**
      * 引入hibernate-validator的5.2.1.Final版本是ok的，但引入6.0.10.Final版本竟然不行！
@@ -81,5 +83,32 @@ public class ValidatedController {
     public ValidationDemo validRequestParam(@RequestParam("id") @Min(10) Integer id) {
         return new ValidationDemo();
     }
+    // -----------------------------------------
+
+    @Resource
+    private ValidationService validationService;
+    @RequestMapping(value = "/service/validParamObject", method = RequestMethod.GET)
+    public ValidationDemo validParamObject() {
+        ValidationDemo demo = new ValidationDemo();
+        // 校验service层方法入参为对象类型
+        validationService.validParamObject(demo);
+        return demo;
+    }
+    @RequestMapping(value = "/service/validParamPrimitive", method = RequestMethod.GET)
+    public ValidationDemo validParamPrimitive() {
+        // 校验service层方法入参为基本类型
+        validationService.validParamPrimitive("", 1);
+
+        return new ValidationDemo();
+    }
+
+    @RequestMapping(value = "/service/validReturnValud", method = RequestMethod.GET)
+    public ValidationDemo validReturnValud() {
+        ValidationDemo demo = new ValidationDemo();
+        // 校验service层方法返回值
+        validationService.validReturnValud();
+        return new ValidationDemo();
+    }
+
 
 }
