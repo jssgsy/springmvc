@@ -116,4 +116,15 @@ public class HomeController {
         return "host is :" + host;
     }
 
+    /**
+     * 访问此接口跳去有form表单的页面
+     * @return
+     * loc
+     */
+    @RequestMapping("/form/page")
+    public String goToFormPage(){
+        System.out.println("form page");
+        return "form";
+    }
+
 }
