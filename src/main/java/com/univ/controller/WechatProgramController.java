@@ -50,8 +50,16 @@ public class WechatProgramController {
 
     /**
      * 上传临时素材
+     * @see https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
      */
     private static final String UPLOAD_TEMP_MATERIAL_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token={?}&type=image";
+
+    /**
+     * 客服消息下发接口url
+     * 下发消息有很多限制，需要仔细查看文档
+     * @see https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html#7
+     */
+    private static final String KEFU_MSG_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={?}";
 
     @PostConstruct
     public void init() {
@@ -144,8 +152,7 @@ public class WechatProgramController {
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         httpHeaders.setContentLength(fileSystemResource.getFile().length());
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(data,
-                httpHeaders);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(data, httpHeaders);
         try {
             String resultJSON = restTemplate.postForObject(UPLOAD_TEMP_MATERIAL_URL, requestEntity, String.class, getAccessToken());
             System.out.println(resultJSON);
@@ -159,6 +166,30 @@ public class WechatProgramController {
             }
         }
         return "ok";
+    }
+
+    /**
+     * 发送客服消息，以文本消息为类， 图片消息类似
+     * @return
+     */
+    @RequestMapping("/kefu/msg/send")
+    public String sendKefuMsg(String content) {
+        JSONObject jsonObject = new JSONObject();
+        // 生效的提前是，需要访客先在客服消息页面发送消息，此时微信服务器才能响应
+        jsonObject.put("touser", "oDH7s4s1-8nbpS6DRMtq-38b-rkE");
+        jsonObject.put("msgtype", "text");
+        JSONObject textBody = new JSONObject();
+        textBody.put("content", content);
+        jsonObject.put("text", textBody);
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        // json格式请求
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        // 构建请求参数
+        HttpEntity httpEntity = new HttpEntity<>(jsonObject.toJSONString(), requestHeaders);
+        String resultJSON = restTemplate.postForObject(KEFU_MSG_SEND_URL, httpEntity, String.class, getAccessToken());
+        System.out.println("发送客服消息-结果：" + resultJSON);
+        return "the msg sended to visitor is ：" + content;
     }
 
 }
