@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSONObject;
 import com.univ.common.response.ListResult;
 import com.univ.common.response.PlainResult;
+import com.univ.controller.util.RestTemplateUtil;
 import com.univ.domain.RemoteDest;
 import com.univ.domain.RemoteSource;
 
@@ -30,9 +31,12 @@ public class RestTemplateController {
     
     @PostConstruct
     public void init() {
+        try {
+            RestTemplateUtil.disableSSLValidation();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         this.restTemplate = new RestTemplate();
-
-
     }
 
     /**
