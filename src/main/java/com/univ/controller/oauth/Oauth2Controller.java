@@ -39,6 +39,14 @@ public class Oauth2Controller {
         this.restTemplate = new RestTemplate();
     }
 
+    /**
+     * github oauth2 授权回调
+     * 注：这里只能处理用户同意授权的情况(此时才有code入参)
+     * 补充：用户拒绝授权时传递的参数为：
+     *  error=access_denied&error_description=The user has denied your application access.&error_uri=https://docs.github.com/apps/manag
+     * @param code
+     * @return
+     */
     @RequestMapping("/github/redirect")
     public String goToFormPage(@RequestParam("code") String code){
         System.out.println("从github获取到的code " + code);
