@@ -1,9 +1,10 @@
 package com.univ.controller;
 
+import com.univ.domain.ValidationDemo;
+import com.univ.service.ValidationService;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.univ.domain.ValidationDemo;
-import com.univ.service.ValidationService;
 
 /**
  * @author univ
@@ -53,7 +51,8 @@ public class ValidationController {
     }*/
 
     /**
-     * 不使用BindingResult，则校验失败时会抛出MethodArgumentNotValidException异常，可使用全局异常捕获之
+     * 1. 不使用BindingResult，则校验失败时会抛出MethodArgumentNotValidException异常，可使用全局异常捕获之
+     * 2. 要启动@RequestBody校验，则被@RequestBody修饰的字段必须要被@Validated修饰，否则校验不启动，即使Controller类上有@Validated修饰
      * @param validatedDemo
      * @return
      */
@@ -63,7 +62,33 @@ public class ValidationController {
     }
 
     /**
-     * 校验PathVariable参数时，必须在controller上使用@Validated
+     * 因为@RequestBody所修饰的字段没有使用@Validated，所以此时不会启动校验
+     */
+    @RequestMapping(value = "/v2_1", method = RequestMethod.POST)
+    public ValidationDemo validObjectV2_1(@RequestBody ValidationDemo validatedDemo) {
+        return validatedDemo;
+    }
+
+    /**
+     * 没有@RequestBody，虽然参数参接收到，但因没有@Validated所以校验不会启动
+     * 注，这里使用GET方法也是相同效果
+     */
+    @RequestMapping(value = "/v2_2", method = RequestMethod.POST)
+    public ValidationDemo validObjectV2_2(ValidationDemo validatedDemo) {
+        return validatedDemo;
+    }
+
+    /**
+     * 没有@RequestBody，但有@Validated，校验照样启动
+     * 注，这里使用GET方法也是相同效果
+     */
+    @RequestMapping(value = "/v2_3", method = RequestMethod.POST)
+    public ValidationDemo validObjectV2_3(@Validated ValidationDemo validatedDemo) {
+        return validatedDemo;
+    }
+
+    /**
+     * 校验PathVariable参数时，必须在controller上使用@Validated,否则即使在这里增加@Validated也没用
      * 注，校验path variable时不能使用BindingResult，在校验失败后会抛出ConstraintViolationException异常
      * @param id
      * @return
