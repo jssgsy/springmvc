@@ -6,10 +6,12 @@
     <display-name>Archetype Created Web Application</display-name>
     <context-param>
         <param-name>contextConfigLocation</param-name>
+        <!--加载spring的全局配置文件，用来加载spring环境-->
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <listener>
+        <!--会使用到上述配置的contextConfigLocation值-->
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
@@ -17,6 +19,11 @@
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <!--加载spring mvc的配置文件，主要控制controller层-->
+            <param-value>WEB-INF/springmvc-servlet.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

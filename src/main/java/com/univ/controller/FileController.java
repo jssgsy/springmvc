@@ -1,16 +1,15 @@
 package com.univ.controller;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.univ.domain.FileDemo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.univ.domain.FileDemo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * @author univ
@@ -83,6 +82,21 @@ public class FileController {
                 + URLEncoder.encode(filename,"utf8"));
         // 往文件中写入数据
         response.getOutputStream().write("你好".getBytes());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
+
+    /**
+     * 图片下载
+     */
+    @RequestMapping("/download/image")
+    public void downloadImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 模拟图片的二进制数据
+        byte[] bytes = new byte[1024];
+        response.setContentType("image/png");
+
+        // 往文件中写入数据
+        response.getOutputStream().write(bytes);
         response.getOutputStream().flush();
         response.getOutputStream().close();
     }
