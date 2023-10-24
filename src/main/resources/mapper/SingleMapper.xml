@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+1. 注意，已经在mybatis-config.xml文件中定义了Single别名
+-->
+
+<mapper namespace="SingleMapper">
+
+    <!--映射成type属性指定的类-->
+    <resultMap id="singleMap" type="com.univ.domain.Single">
+        <!-- 虽然select中是b_id，但这里column的值可以直接写成id -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <!--最好为需要特殊类型转换处理的字段显示指定typeHandler-->
+        <!--如果是基本类型，则jdbcType可省略-->
+        <result column="age" property="age"/>
+    </resultMap>
+
+    <!--适用于表中字段名与实体类中对应的字段名一模一样-->
+    <select id="getById" resultType="com.univ.domain.Single" useCache="true" flushCache="true">
+        SELECT *
+        FROM single
+        WHERE id = #{id}
+    </select>
+
+</mapper>

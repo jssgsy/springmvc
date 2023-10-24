@@ -26,4 +26,27 @@
     <!--使用bean validation校验path variable或者request param时需要-->
     <bean id="methodValidationPostProcessor" class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
 
+    <!--注：datasource使用任意的均可，以druid为例-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+        <property name="username" value="root" />
+        <property name="password" value="修改这里" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 还可以配置mybatis配置文件、mapper xml文件路径、typeAliasesPackage等等 -->
+        <!--configLocation、typeAliasesPackage-->
+
+        <!-- 加载mapper xml文件 -->
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    </bean>
+
+    <!--代码中直接使用sqlSessionTemplate来操作db-->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <!--只能通过构造器注入sqlSessionFactory,因为没有set方法-->
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
 </beans>
