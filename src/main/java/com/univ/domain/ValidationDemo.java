@@ -1,12 +1,11 @@
 package com.univ.domain;
 
+import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
-
-import lombok.Data;
 
 /**
  * @author univ
@@ -16,10 +15,10 @@ import lombok.Data;
 @Data
 public class ValidationDemo {
 
-    @NotBlank
+    @NotBlank(message = "name不能为空")
     private String name;
 
-    @Min(20)
+    @Min(value = 20, message = "age最小值为20")
     private Integer age;
 
     /**

@@ -2,17 +2,13 @@ package com.univ.controller;
 
 import com.univ.domain.ValidationDemo;
 import com.univ.service.ValidationService;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author univ
@@ -74,7 +70,7 @@ public class ValidationController {
      * 注，这里使用GET方法也是相同效果
      */
     @RequestMapping(value = "/v2_2", method = RequestMethod.POST)
-    public ValidationDemo validObjectV2_2(ValidationDemo validatedDemo) {
+    public ValidationDemo validObjectV2_2(@Validated ValidationDemo validatedDemo) {
         return validatedDemo;
     }
 
@@ -90,8 +86,6 @@ public class ValidationController {
     /**
      * 校验PathVariable参数时，必须在controller上使用@Validated,否则即使在这里增加@Validated也没用
      * 注，校验path variable时不能使用BindingResult，在校验失败后会抛出ConstraintViolationException异常
-     * @param id
-     * @return
      */
     @RequestMapping(value = "/v3/{id}", method = RequestMethod.GET)
     public ValidationDemo validPathVariable(@PathVariable("id") @Valid @Min(10) Integer id) {

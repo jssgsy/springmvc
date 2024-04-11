@@ -2,7 +2,6 @@ package com.univ.task;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 /**
  * @author univ
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 别忘了使任务类为bean
  */
-@Component
+//@Component
 public class TaskDemo {
 
     /**
