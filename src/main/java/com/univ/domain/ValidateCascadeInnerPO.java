@@ -1,10 +1,9 @@
 package com.univ.domain;
 
-import javax.validation.constraints.Min;
-
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.Data;
+import javax.validation.constraints.Min;
 
 /**
  * @author univ
@@ -12,7 +11,7 @@ import lombok.Data;
  * @description
  */
 @Data
-public class ValidateInnerDemo {
+public class ValidateCascadeInnerPO {
 
     @Min(value = 10, message = "id最小值为10")
     private Integer id;
