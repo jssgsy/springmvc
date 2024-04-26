@@ -3,12 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <!--经验证，下面两句必须放在此文件而不能放在springmvc-servlet.xml文件中!-->
     <!--自动将@Component,@Controller等注册为bean-->
@@ -16,6 +17,7 @@
     <context:component-scan base-package="com.univ.exception"/>
     <context:component-scan base-package="com.univ.task"/>
     <context:component-scan base-package="com.univ.service"/>
+    <cache:annotation-driven />
 
     <!--支持@RequestMapping的请求方式-->
     <mvc:annotation-driven/>
@@ -48,5 +50,17 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <!--只能通过构造器注入sqlSessionFactory,因为没有set方法-->
         <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    <!--配置缓存管理器-->
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <!--注，必须为其指定有哪些可用的缓存-->
+        <property name="caches">
+            <list>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCache">
+                    <constructor-arg value="cacheOne">
+                    </constructor-arg>
+                </bean>
+            </list>
+        </property>
     </bean>
 </beans>
