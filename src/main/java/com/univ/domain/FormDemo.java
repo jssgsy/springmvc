@@ -1,10 +1,11 @@
 package com.univ.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author univ
@@ -29,6 +30,16 @@ public class FormDemo {
     private Integer[] ids;
 
     private List<Integer> ids2;
+
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date birthday;

@@ -1,13 +1,7 @@
 package com.univ.controller;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.univ.domain.FormDemo;
 
@@ -21,6 +15,11 @@ import com.univ.domain.FormDemo;
 @RestController
 @RequestMapping("/param")
 public class ParamCollectController {
+
+    @GetMapping(value = "/noParam")
+    public String noParam() {
+        return "noParam";
+    }
 
     /**
      * get方法
@@ -147,6 +146,23 @@ public class ParamCollectController {
         return "obj";
     }
 
+    @PostMapping(value = "/json")
+    public FormDemo p1(@RequestBody FormDemo formDemo) {
+        System.out.println(formDemo);
+        return formDemo;
+    }
+
+    @PostMapping(value = "/form-urlencoded")
+    public FormDemo p2(FormDemo formDemo) {
+        System.out.println(formDemo);
+        return formDemo;
+    }
+
+    @PostMapping(value = "/file")
+    public FormDemo p3(FormDemo formDemo) {
+        System.out.println(formDemo.getFile().getOriginalFilename());
+        return formDemo;
+    }
 
 
 }
