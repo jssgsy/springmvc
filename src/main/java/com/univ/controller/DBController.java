@@ -21,6 +21,6 @@ public class DBController {
 
     @RequestMapping("/get")
     public List<Single> get() {
-        return sqlSessionTemplate.selectList("SingleMapper.getById", 2L);
+        return sqlSessionTemplate.selectList("SingleMapper.getById", 1L);
     }
 }

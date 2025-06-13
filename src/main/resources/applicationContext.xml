@@ -31,9 +31,9 @@
     <!--注：datasource使用任意的均可，以druid为例-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+        <property name="url" value="jdbc:mysql://localhost:3316/mybatis" />
         <property name="username" value="root" />
-        <property name="password" value="修改这里" />
+        <property name="password" value="root" />
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
